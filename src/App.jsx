@@ -1,16 +1,30 @@
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Card from './components/Card';
 
 const cardsWithSources = [
-  {src: "./images/Lola-and-I.png"},
-  {src: "./images/lola-biting-chair.png"}
+  {"src": "./images/Lola-and-I.png"},
+  {"src": "./images/lola-biting-chair.png"},
+  {"src": "./images/lola-close-up.png"},
+  {"src": "./images/Lola-in-couch.png"},
+  {"src": "./images/Lola-on-Laptop.png"},
+  {"src": "./images/Lola-on-plants.png"},
 ]
 
-//  test comment
-
 function App() {
-  const [cards, setCards] = useState(cardsWithSources);
+  const [cards, setCards] = useState([]);
+  
+  const shuffleCards = () => {
+    const shuffledCards = [...cardsWithSources, ...cardsWithSources]
+      .sort(() => Math.random() - .5)
+      .map((card) => ({...card, id: Math.random()}));
+
+    setCards(shuffledCards)
+  }
+
+  useEffect(() => {
+    shuffleCards()
+  }, [])
 
   return (
     <div className="App">
@@ -18,8 +32,7 @@ function App() {
       <div className="board">
         {cards.map(card => (
           <div>
-            <Card />
-            <img src={card.src} alt='' width="500" height="600"/>
+            <Card card={card}/>
           </div>
         ))}
       </div>
