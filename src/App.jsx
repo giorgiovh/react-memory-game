@@ -7,6 +7,8 @@ const cardsWithSources = [
   {src: "./images/lola-biting-chair.png"}
 ]
 
+//  test comment
+
 function App() {
   const [cards, setCards] = useState(cardsWithSources);
 
