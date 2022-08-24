@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 import Card from './components/Card';
 
 const cardsWithSources = [
-  { "src": "./images/Lola-and-I.png" },
-  { "src": "./images/lola-biting-chair.png" },
-  { "src": "./images/lola-close-up.png" },
-  { "src": "./images/Lola-in-couch.png" },
-  { "src": "./images/Lola-on-Laptop.png" },
-  { "src": "./images/Lola-on-plants.png" },
+  { "src": "./images/Lola-and-I.png", matched: false },
+  { "src": "./images/lola-biting-chair.png", matched: false },
+  { "src": "./images/lola-close-up.png", matched: false },
+  { "src": "./images/Lola-in-couch.png", matched: false },
+  { "src": "./images/Lola-on-Laptop.png", matched: false },
+  { "src": "./images/Lola-on-plants.png", matched: false },
 ]
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
   }, [])
 
   const checkIfMatch = (choiceOne, choiceTwo) => {
-    choiceOne.src === choiceTwo.src ? alert("Match!") : alert("Not a match")
+    return choiceOne.src === choiceTwo.src
   }
 
   const handleClick = (card) => {
@@ -43,7 +43,13 @@ function App() {
   useEffect(() => {
     console.log(choiceOne, choiceTwo);
     if (choiceOne && choiceTwo) {
-      checkIfMatch(choiceOne, choiceTwo)
+      if (checkIfMatch(choiceOne, choiceTwo)) {
+        setCards(prevCards => {
+          return prevCards.map(card => {
+            return card.src === choiceOne.src ? { ...card, matched: true } : { ...card }
+          })
+        })
+      }
     }
   }, [choiceOne, choiceTwo])
 
@@ -52,7 +58,7 @@ function App() {
       <h1>Lola's Memory Game</h1>
       <div className="board">
         {cards.map(card => (
-          <Card card={card} handleClick={handleClick} key={card.id} />
+          <Card card={card} handleClick={handleClick} key={card.id} flipped={card === choiceOne || card === choiceTwo || card.matched}/>
         ))}
       </div>
     </div>
