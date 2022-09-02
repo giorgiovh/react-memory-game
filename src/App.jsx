@@ -27,22 +27,23 @@ function App() {
     setCards(shuffledCards)
   }
 
-  const resetTurn = () => {
-    setChoiceOne(null)
-    setChoiceTwo(null)
-    setDisabled(false)
-  }
-
   useEffect(() => {
     shuffleCards()
   }, [])
+
+  const handleChoice = (card) => {
+    console.log(card);
+    choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
+  }
 
   const checkIfMatch = (choiceOne, choiceTwo) => {
     return choiceOne.src === choiceTwo.src
   }
 
-  const handleChoice = (card) => {
-    choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
+  const resetTurn = () => {
+    setChoiceOne(null)
+    setChoiceTwo(null)
+    setDisabled(false)
   }
 
   // compare the two choices and if they match, set the matched property to true
@@ -50,6 +51,7 @@ function App() {
     console.log(choiceOne, choiceTwo);
     if (choiceOne && choiceTwo) {
       setDisabled(true)
+
       if (checkIfMatch(choiceOne, choiceTwo)) {
         setCards(prevCards => {
           return prevCards.map(card => {
