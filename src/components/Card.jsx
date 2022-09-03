@@ -20,6 +20,7 @@ export default function Card({ card, handleChoice, flipped, disabled }) {
         width="500" 
         height="600" 
         onClick={disabled ? () => {} : () => handleChoice(card)}
+        style={flipped ? {display: "none"} : {}}
       />
     </div>
   )
