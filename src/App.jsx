@@ -71,6 +71,7 @@ function App() {
     <div className="App">
       <h1>Lola's Memory Game</h1>
       <button onClick={shuffleCards}>New Game</button>
+      
       <div className="board">
         {cards.map(card => (
           <Card 
